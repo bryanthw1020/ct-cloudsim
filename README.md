@@ -1,6 +1,4 @@
-# nuxtjs-vuetify
-
-> NuxtJs + Vuetify + Base Config Modularization Setup
+# CT CloudSIM
 
 ## Build Setup
 
