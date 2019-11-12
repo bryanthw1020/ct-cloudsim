@@ -30,7 +30,7 @@ export default {
     '@nuxtjs/vuetify',
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
-    '@nuxtjs/auth',
+    // '@nuxtjs/auth',
     '@nuxtjs/proxy',
     '@nuxtjs/dotenv',
     '@nuxtjs/device'
@@ -39,7 +39,7 @@ export default {
    * Router configuration
    */
   router: {
-    middleware: ['auth']
+    // middleware: ['auth']
   },
   auth,
   axios,

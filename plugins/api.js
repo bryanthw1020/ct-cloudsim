@@ -1,13 +1,13 @@
 import authApi from '@/api/auth';
-import dropdownApi from '@/api/dropdown';
+import simApi from '@/api/sim';
 
 export default (ctx, inject) => {
     const auth = authApi(ctx.$axios);
-    const dropdown = dropdownApi(ctx.$axios);
+    const sim = simApi(ctx.$axios);
 
     const api = {
         auth,
-        dropdown
+        sim
     };
 
     inject('api', api);

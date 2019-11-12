@@ -8,7 +8,15 @@
           <h3 class="subtitle-1">Auto Top Up</h3>
         </v-col>
         <v-col cols="auto" align-self="end">
-          <v-switch class="mt-0" color="primary" v-model="autoTopUp" dense inset hide-details></v-switch>
+          <v-switch
+            class="mt-0"
+            color="primary"
+            v-model="autoTopUp"
+            dense
+            inset
+            hide-details
+            @change="$bus.$emit('autoTopupConfirm', $event)"
+          ></v-switch>
         </v-col>
       </v-row>
       <v-card class="simcard">
@@ -99,21 +107,34 @@
         </v-list>
       </v-card>
     </v-container>
+    <auto-top-up-confirm />
   </div>
 </template>
 
 <script>
 import MainBanner from "~/components/MainBanner";
+import AutoTopUpConfirm from "~/components/AutoTopUpConfirm";
 
 export default {
   auth: false,
   components: {
-    MainBanner
+    MainBanner,
+    AutoTopUpConfirm
   },
   data() {
     return {
       autoTopUp: false
     };
+  },
+  methods: {
+    showAutoTopUpConfirm(value) {
+      this.$bus.$emit("autoTopupConfirm", value);
+    }
+  },
+  created() {
+    this.$bus.$on("revertAutoTopUpToggle", () => {
+      this.autoTopUp = !this.autoTopUp;
+    });
   }
 };
 </script>

@@ -4,10 +4,10 @@ export default {
         logout: '/api/auth/logout',
         info: '/api/auth/info',
     },
-    dropdown: {
-        category: '/api/dropdown/categories',
-        paymentMethod: '/api/dropdown/paymentMethods',
-        postcode: '/api/dropdown/postcodes',
-        state: '/api/dropdown/states',
+    sim: {
+        bind: '/api/SIM/bind',
+        getAccountList: '/api/SIM/GetAccountList',
+        autoTopup: '/api/SIM/AutoTopup',
+        topup: '/api/SIM/Topup',
     },
 }
