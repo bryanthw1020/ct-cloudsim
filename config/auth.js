@@ -5,14 +5,14 @@ export default {
     strategies: {
         local: {
             endpoints: {
-                login: { url: apiRoute.auth.login, method: 'post', propertyName: 'data.token' },
-                logout: { url: apiRoute.auth.logout, method: 'post' },
-                user: { url: apiRoute.auth.info, method: 'get', propertyName: 'data' }
+                login: { url: 'https://otp-api.cloudtokenwallet.com/api/general/getToken', method: 'post', propertyName: 'token' },
+                user: { url: apiRoute.sim.getAccountList, method: 'post', propertyName: 'data' }
             }
         }
     },
     redirect: {
-        logout: '/login',
+        login: '/authenticate',
+        logout: '/authenticate',
         home: '/'
     }
 }

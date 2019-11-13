@@ -116,7 +116,6 @@ import MainBanner from "~/components/MainBanner";
 import AutoTopUpConfirm from "~/components/AutoTopUpConfirm";
 
 export default {
-  auth: false,
   components: {
     MainBanner,
     AutoTopUpConfirm

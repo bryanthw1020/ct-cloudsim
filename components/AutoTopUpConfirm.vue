@@ -34,11 +34,21 @@ export default {
       this.$bus.$emit("revertAutoTopUpToggle");
     },
     async submit() {
-        try {
-            let result = await this.$api.sim.autoTopup();
-        } catch (err) {
-            console.log(err);
-        }
+      try {
+        let result = await this.$api.sim.autoTopup({
+          accountNumber: "",
+          autoTopup: this.activateAuto
+        });
+      } catch (err) {
+        let message = this.activateAuto
+          ? "Oops! There's some issue activating auto top up. Please try again."
+          : "Oops! There's some issue deactivating auto top up. Please try again.";
+
+        this.$store.dispatch("showSnackbar", {
+          text: message,
+          color: "error"
+        });
+      }
     }
   },
   created() {
