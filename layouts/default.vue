@@ -3,7 +3,7 @@
     <v-content>
       <nuxt />
     </v-content>
-    <v-snackbar :timeout="snackbar.timeout" bottom :color="snackbar.color" v-model="snackbar.show">
+    <v-snackbar :timeout="0" bottom :color="snackbar.color" v-model="snackbar.show">
       {{ snackbar.text }}
       <v-btn dark @click="$store.dispatch('closeSnackbar')" icon>
         <v-icon>close</v-icon>

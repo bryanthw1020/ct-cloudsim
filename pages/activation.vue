@@ -19,7 +19,7 @@
           />
         </v-card-text>
         <v-card-actions class="py-5">
-          <v-btn color="primary" :loading="loading" block rounded>Confirm</v-btn>
+          <v-btn color="primary" :loading="loading" block rounded @click="bind">Confirm</v-btn>
         </v-card-actions>
       </v-card>
     </v-container>
@@ -30,7 +30,6 @@
 import MainBanner from "~/components/MainBanner";
 
 export default {
-  auth: false,
   components: {
     MainBanner
   },
@@ -42,6 +41,17 @@ export default {
         serial_number: null
       }
     };
+  },
+  methods: {
+    async bind() {
+      try {
+        let result = await this.$api.sim.bind(this.activationForm);
+
+        console.log(result);
+      } catch (err) {
+        console.log(err);
+      }
+    }
   }
 };
 </script>

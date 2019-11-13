@@ -6,8 +6,9 @@ export default {
         local: {
             endpoints: {
                 login: { url: 'https://otp-api.cloudtokenwallet.com/api/general/getToken', method: 'post', propertyName: 'token' },
-                user: { url: apiRoute.sim.getAccountList, method: 'post', propertyName: 'data' }
-            }
+                logout: false,
+                user: { url: apiRoute.sim.getAccountList, method: 'post', data: {}, propertyName: 'data' }
+            },
         }
     },
     redirect: {

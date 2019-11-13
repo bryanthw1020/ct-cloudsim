@@ -35,6 +35,7 @@ export default {
     },
     async submit() {
       try {
+        console.log(this.$store.getter["getUser"]);
         let result = await this.$api.sim.autoTopup({
           accountNumber: "",
           autoTopup: this.activateAuto

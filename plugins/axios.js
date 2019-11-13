@@ -1,11 +1,13 @@
 require('dotenv').config();
 
-export default function ({ app: { $axios } }) {
+export default function ({ store, app: { $axios } }) {
     $axios.onRequest(config => {
-        config.data.secretKey = process.env.API_SECRET_KEY || null;
+        if (!config.url.includes('/api/general/getToken')) {
+            config.data.secretKey = process.env.API_SECRET_KEY || null;
 
-        // if (store.$auth.getToken('local')) {
-        //     config.headers.common['Authorization'] = store.$auth.getToken('local');
-        // }
+            if (store.getters["getToken"]) {
+                config.data.token = store.getters["getToken"];
+            }
+        }
     })
 }

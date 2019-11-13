@@ -13,30 +13,31 @@
 export default {
   data() {
     return {
-      loading: true,
       message: "Authenticating your access...",
       formModel: {
-        cardNo: this.$route.query.uuid
+        cardNo: this.$route.query.uuid,
+        secretKey: "LNoxXR3pA2YzWirBsxmX5qu9TTpdxrkO"
       }
     };
   },
   methods: {
     async login() {
       try {
-        await this.$auth.loginWith("local", {
-          data: this.formModel
-        });
+        let { token } = await this.$api.ct.getToken(this.formModel);
+        let user = await this.$api.sim.getAccountList({ token: token });
+
+        this.$store.commit("setToken", token);
+        this.$store.commit("setUser", user.data);
         this.$store.dispatch("showSnackbar", {
           text: "Successfully authenticated. Redirecting you to homepage.",
+          timeout: 1000,
           color: "success"
         });
         this.$router.push("/");
       } catch (err) {
-        this.loading = false;
         this.$store.dispatch("showSnackbar", {
           text:
             "Oops! There's some issue authenticating your access. Please try again.",
-          timeout: 0,
           color: "error"
         });
       }
