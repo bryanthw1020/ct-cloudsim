@@ -3,5 +3,5 @@
 ** See https://axios.nuxtjs.org/options
 */
 export default {
-    proxy: true,
+    proxy: false,
 }
