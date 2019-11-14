@@ -1,7 +1,8 @@
 export const state = () => {
     return {
         token: null,
-        user: [],
+        accounts: [],
+        currentAccount: {},
         snackbar: {
             show: false,
             text: null,
@@ -15,8 +16,11 @@ export const getters = {
     getToken(state) {
         return state.token;
     },
-    getUser(state) {
-        return state.user;
+    getAccounts(state) {
+        return state.accounts;
+    },
+    getCurrentAccount(state) {
+        return state.currentAccount;
     },
     getSnackbar(state) {
         return state.snackbar;
@@ -27,8 +31,12 @@ export const mutations = {
     setToken(state, token) {
         state.token = token;
     },
-    setUser(state, user) {
-        state.user = user;
+    setAccounts(state, accounts) {
+        state.accounts = accounts;
+        state.currentAccount = accounts[0];
+    },
+    setCurrentAccount(state, account) {
+        state.currentAccount = account;
     },
     closeSnackbar(state) {
         state.snackbar.show = false;

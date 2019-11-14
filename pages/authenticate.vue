@@ -24,10 +24,10 @@ export default {
     async login() {
       try {
         let { token } = await this.$api.ct.getToken(this.formModel);
-        let user = await this.$api.sim.getAccountList({ token: token });
+        let accounts = await this.$api.sim.getAccountList({ token: token });
 
         this.$store.commit("setToken", token);
-        this.$store.commit("setUser", user.data);
+        this.$store.commit("setAccounts", accounts.data);
         this.$store.dispatch("showSnackbar", {
           text: "Successfully authenticated. Redirecting you to homepage.",
           timeout: 1000,

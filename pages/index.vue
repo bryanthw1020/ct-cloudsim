@@ -2,7 +2,36 @@
   <div>
     <main-banner />
     <v-container fluid>
-      <h1 class="title">Europe SIMs</h1>
+      <v-row>
+        <v-col>
+          <h1 class="title">{{ currentAccount.description }}</h1>
+        </v-col>
+        <v-col cols="auto">
+          <v-menu bottom>
+            <template v-slot:activator="{ on }">
+              <v-btn icon v-on="on">
+                <v-icon>mdi-dots-vertical</v-icon>
+              </v-btn>
+            </template>
+
+            <v-list two-line>
+              <v-list-item
+                v-for="(account, key) in accounts"
+                :key="key"
+                @click="switchAccount(account)"
+              >
+                <v-list-item-content>
+                  <v-list-item-title>{{ account.description }}</v-list-item-title>
+                  <v-list-item-subtitle>{{ account.accountNumber }}</v-list-item-subtitle>
+                </v-list-item-content>
+                <v-list-item-icon v-if="account.accountNumber == currentAccount.accountNumber">
+                  <v-icon>check</v-icon>
+                </v-list-item-icon>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+        </v-col>
+      </v-row>
       <v-row>
         <v-col>
           <h3 class="subtitle-1">Auto Top Up</h3>
@@ -23,27 +52,26 @@
         <v-card-text>
           <div class="simcard--serial">
             <h5 class="caption">Serial Number</h5>
-            <p class="subtitle-1 mb-0 text--primary">2345-6689-7652-0098</p>
+            <p class="subtitle-1 mb-0 text--primary">{{ currentAccount.accountNumber }}</p>
           </div>
           <div class="simcard--balance">
             <h4 class="title mb-3">Data Balance</h4>
             <v-row align="end" no-gutters>
               <v-col>
-                <p class="display-1 font-weight-bold text--primary ma-0">0.95 GB</p>
-              </v-col>
-              <v-col cols="auto">
-                <p class="body-2 ma-0">of 1.00 GB</p>
+                <p
+                  class="display-1 font-weight-bold text--primary ma-0"
+                >{{ currentAccount.balance | mbToGb}}</p>
               </v-col>
             </v-row>
-            <v-progress-linear
-              class="my-2"
-              color="primary reversed"
-              background-color="grey lighten-4"
-              height="18"
-              value="90"
-              rounded
-            ></v-progress-linear>
-            <p class="body-2 font-weight-medium">Valid till 20 Nov 2019 (7 Days)</p>
+            <p class="body-2 font-weight-medium">
+              Valid till
+              <template v-if="currentAccount.expiryDate">
+                <b>{{ currentAccount.expiryDate | dateParse('YYYY-MM-DD HH:mm:ss') | dateFormat('DD MMM YYYY hh:mm A') }}</b>
+              </template>
+              <template v-else>
+                <b>-</b>
+              </template>
+            </p>
           </div>
         </v-card-text>
         <v-card-actions class="py-5">
@@ -52,7 +80,7 @@
       </v-card>
     </v-container>
 
-    <v-container fluid pt-5>
+    <!-- <v-container fluid pt-5>
       <v-row>
         <v-col>
           <h3 class="subtitle-1">Top Up History</h3>
@@ -106,12 +134,13 @@
           </v-list-item>
         </v-list>
       </v-card>
-    </v-container>
+    </v-container>-->
     <auto-top-up-confirm />
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
 import MainBanner from "~/components/MainBanner";
 import AutoTopUpConfirm from "~/components/AutoTopUpConfirm";
 
@@ -125,12 +154,20 @@ export default {
       autoTopUp: false
     };
   },
+  computed: {
+    ...mapState(["accounts", "currentAccount"])
+  },
   methods: {
     showAutoTopUpConfirm(value) {
       this.$bus.$emit("autoTopupConfirm", value);
+    },
+    switchAccount(account) {
+      this.autoTopUp = account.autoTopup;
+      this.$store.commit("setCurrentAccount", account);
     }
   },
   created() {
+    this.autoTopUp = this.currentAccount.autoTopup;
     this.$bus.$on("revertAutoTopUpToggle", () => {
       this.autoTopUp = !this.autoTopUp;
     });

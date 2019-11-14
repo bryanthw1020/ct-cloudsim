@@ -21,12 +21,17 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   data() {
     return {
       show: false,
       activateAuto: false
     };
+  },
+  computed: {
+    ...mapState(["currentAccount"])
   },
   methods: {
     cancel() {
@@ -35,10 +40,20 @@ export default {
     },
     async submit() {
       try {
-        console.log(this.$store.getter["getUser"]);
-        let result = await this.$api.sim.autoTopup({
-          accountNumber: "",
+        let message = this.activateAuto
+          ? "Successfully activated auto top up."
+          : "Successfully deactivated auto top up.";
+
+        await this.$api.sim.autoTopup({
+          accountNumber: this.currentAccount.accountNumber,
           autoTopup: this.activateAuto
+        });
+
+        this.show = false;
+        this.$store.dispatch("showSnackbar", {
+          text: message,
+          timeout: 1000,
+          color: "success"
         });
       } catch (err) {
         let message = this.activateAuto

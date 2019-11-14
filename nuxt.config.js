@@ -20,7 +20,7 @@ export default {
     '@/plugins/api',
     '@/plugins/axios',
     '@/plugins/bus',
-    // '@/plugins/filter',
+    '@/plugins/filter',
     // '@/plugins/helper',
   ],
   /*
