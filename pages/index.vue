@@ -14,8 +14,18 @@
               </v-btn>
             </template>
 
-            <v-list two-line>
+            <v-list dense>
+              <v-list-item :to="{name: 'activation'}">
+                <v-list-item-content>
+                  <v-list-item-title>Bind Account</v-list-item-title>
+                </v-list-item-content>
+                <v-list-item-icon>
+                  <v-icon>add</v-icon>
+                </v-list-item-icon>
+              </v-list-item>
+              <v-divider></v-divider>
               <v-list-item
+                two-line
                 v-for="(account, key) in accounts"
                 :key="key"
                 @click="switchAccount(account)"
@@ -145,6 +155,7 @@ import MainBanner from "~/components/MainBanner";
 import AutoTopUpConfirm from "~/components/AutoTopUpConfirm";
 
 export default {
+  middleware: ["hasBindAccount"],
   components: {
     MainBanner,
     AutoTopUpConfirm

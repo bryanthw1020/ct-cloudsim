@@ -13,8 +13,24 @@
       </template>
       <v-spacer class="py-5" />
       <v-card-actions class="flex-column">
-        <v-btn class="mb-3" color="red" block outlined rounded @click="cancel">Cancel</v-btn>
-        <v-btn class="ma-0 mb-2" color="primary" block outlined rounded @click="submit">Confirm</v-btn>
+        <v-btn
+          class="mb-3"
+          color="red"
+          :disabled="loading"
+          block
+          outlined
+          rounded
+          @click="cancel"
+        >Cancel</v-btn>
+        <v-btn
+          class="ma-0 mb-2"
+          color="primary"
+          :loading="loading"
+          block
+          outlined
+          rounded
+          @click="submit"
+        >Confirm</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -26,12 +42,13 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
+      loading: false,
       show: false,
       activateAuto: false
     };
   },
   computed: {
-    ...mapState(["currentAccount"])
+    ...mapState(["accounts", "currentAccount"])
   },
   methods: {
     cancel() {
@@ -40,6 +57,7 @@ export default {
     },
     async submit() {
       try {
+        this.loading = true;
         let message = this.activateAuto
           ? "Successfully activated auto top up."
           : "Successfully deactivated auto top up.";
@@ -50,6 +68,7 @@ export default {
         });
 
         this.show = false;
+        this.$store.dispatch("refreshAccounts", this.currentAccount);
         this.$store.dispatch("showSnackbar", {
           text: message,
           timeout: 1000,
@@ -64,6 +83,8 @@ export default {
           text: message,
           color: "error"
         });
+      } finally {
+        this.loading = false;
       }
     }
   },
