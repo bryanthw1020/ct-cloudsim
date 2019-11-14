@@ -15,8 +15,7 @@ export default {
     return {
       message: "Authenticating your access...",
       formModel: {
-        cardNo: this.$route.query.uuid,
-        secretKey: "LNoxXR3pA2YzWirBsxmX5qu9TTpdxrkO"
+        cardNo: this.$route.query.uuid
       }
     };
   },

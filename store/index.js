@@ -36,7 +36,6 @@ export const mutations = {
         state.token = token;
     },
     setAccounts(state, params) {
-        console.log(params);
         if (params.accounts.length) {
             state.accounts = params.accounts;
 

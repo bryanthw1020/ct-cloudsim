@@ -8,7 +8,7 @@
       </v-card-text>
       <v-spacer class="py-5" />
       <v-card-actions class="flex-column">
-        <v-btn class="ma-0 mb-2" color="primary" block outlined rounded @click="close">See Receipt</v-btn>
+        <v-btn class="ma-0 mb-2" color="primary" block outlined rounded @click="close">Close</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>

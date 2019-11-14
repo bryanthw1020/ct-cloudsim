@@ -8,6 +8,8 @@ export default function ({ store, app: { $axios } }) {
             if (store.getters["getToken"]) {
                 config.data.token = store.getters["getToken"];
             }
+        } else {
+            config.data.secretKey = process.env.API_TOKEN_SECRET_KEY || null;
         }
     })
 }
