@@ -1,7 +1,7 @@
 {
-  "name": "nuxt-boilerplate",
+  "name": "ct-cloudsim",
   "version": "1.0.0",
-  "description": "NuxtJs Quick Start Boilerplat",
+  "description": "CloudToken - CloudSIM Mini Application",
   "author": "Bryan Tan",
   "private": true,
   "scripts": {
