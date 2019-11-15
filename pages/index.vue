@@ -7,6 +7,9 @@
           <h1 class="title">{{ currentAccount.description }}</h1>
         </v-col>
         <v-col cols="auto">
+          <v-btn icon @click="refresh">
+            <v-icon>refresh</v-icon>
+          </v-btn>
           <v-menu bottom>
             <template v-slot:activator="{ on }">
               <v-btn icon v-on="on">
@@ -175,6 +178,14 @@ export default {
     switchAccount(account) {
       this.autoTopUp = account.autoTopup;
       this.$store.commit("setCurrentAccount", account);
+    },
+    refresh() {
+      this.$store.dispatch("showSnackbar", {
+        text: "Reloading...",
+        timeout: 1000,
+        color: "secondary"
+      });
+      this.$store.dispatch("refreshAccounts", this.currentAccount);
     }
   },
   created() {
